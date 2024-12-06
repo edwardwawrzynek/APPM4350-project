@@ -47,7 +47,7 @@ figure();
 quiver(x.*10^3,y.*10^3,imag(Ex),imag(Ey))
 xlim([0 a*10^3])
 ylim([0 b*10^3])
-title ('E-Field $TE_{10}$','Interpreter','latex')
+title ("E-Field $TM_{"+string(m)+string(n)+"}$"','Interpreter','latex')
 xlabel('x-position [mm]','Interpreter','latex')
 ylabel('y-position [mm]','Interpreter','latex')
 
@@ -55,7 +55,7 @@ figure();
 quiver(x.*10^3,y.*10^3,imag(Hx),imag(Hy))
 xlim([0 a*10^3])
 ylim([0 b*10^3])
-title ('H-Field $TE_{10}$','Interpreter','latex')
+title ("H-Field $TM_{"+string(m)+string(n)+"}$",'Interpreter','latex')
 xlabel('x-position [mm]','Interpreter','latex')
 ylabel('y-position [mm]','Interpreter','latex')
 
@@ -90,7 +90,7 @@ figure();
 quiver(x.*10^3,y.*10^3,imag(Ex),imag(Ey))
 xlim([0 a*10^3])
 ylim([0 b*10^3])
-title ('E-Field $TM_{10}$','Interpreter','latex')
+title ("E-Field $TM_{"+string(m)+string(n)+"}$",'Interpreter','latex')
 xlabel('x-position [mm]','Interpreter','latex')
 ylabel('y-position [mm]','Interpreter','latex')
 
@@ -98,7 +98,7 @@ figure();
 quiver(x.*10^3,y.*10^3,real(Hx),real(Hy))
 xlim([0 a*10^3])
 ylim([0 b*10^3])
-title ('H-Field $TM_{10}$','Interpreter','latex')
+title ("H-Field $TM_{"+string(m)+string(n)+"}$",'Interpreter','latex')
 xlabel('x-position [mm]','Interpreter','latex')
 ylabel('y-position [mm]','Interpreter','latex')
 
