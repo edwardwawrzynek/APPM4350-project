@@ -6,8 +6,8 @@ function dispersion_demo
     % waveguide mode cutoff
     omega_c = 2*pi*6.557e9;
     % frequencies to plot
-    omega1 = 2*pi*9e9;
-    omega2 = 2*pi*9.5e9;
+    omega1 = 2*pi*10e9;
+    omega2 = 2*pi*10.5e9;
 
     % compute phase coefficients
     beta1 = sqrt((omega1^2 - omega_c^2)/(c^2));
@@ -22,7 +22,7 @@ function dispersion_demo
 
     
     % time steps at which to plot
-    times = [0 0.1e-9 0.2e-9];
+    times = [0 0.3e-9 0.6e-9];
     % spacial dimension over which to plot
     x = -0.4:0.001:0.4;
     
@@ -54,9 +54,9 @@ function dispersion_demo
             legend();
             xlabel(["x[m]", "(a) t = 0ns"]);
         elseif plot_index == 2
-            xlabel(["x[m]", "(b) t = 0.1ns"]);
+            xlabel(["x[m]", "(b) t = 0.3ns"]);
         else
-            xlabel(["x[m]", "(c) t = 0.2ns"]);
+            xlabel(["x[m]", "(c) t = 0.6ns"]);
         end
         ylabel("u");
 
