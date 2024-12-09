@@ -34,9 +34,11 @@ z = 0;
 kc = sqrt(eigenm^2 + eigenn^2);
 beta = sqrt(k^2 - kc^2);
 
+%Electric Field Equations
 Ex = 1j*w*mu0*n*pi/(b*kc^2)*A*cos(eigenm.*x).*sin(eigenn.*y).*exp(-1j*beta*z);
 Ey= -1j*w*mu0*m*pi/(a*kc^2)*A*sin(eigenm.*x).*cos(eigenn.*y).*exp(-1j*beta*z);
 
+%Magnetic Field Equations
 Hx = 1j*beta*m*pi/(a*kc^2)*A*sin(eigenm.*x).*cos(eigenn.*y).*exp(-1j*beta*z);
 Hy = 1j*beta*n*pi/(b*k^2)*A*cos(eigenm.*x).*sin(eigenn.*y).*exp(-1j*beta*z);
 

@@ -32,48 +32,68 @@ m=1;
 n=0; %define modes
 
 k = (m*pi/a)^2+(n*pi/b)^2;
-fc = (c0/2)*sqrt((m/a)^2+(n/b)^2);
+fc = (c0/2)*sqrt((m/a)^2+(n/b)^2)
 
-calc_beta = (2*pi*freq./c0)*sqrt(1-(1/freq.^2)*((c0^2)*(k)/(4*pi^2)));
+%calc_beta = (2*pi*freq./c0)*sqrt(1-(1/freq.^2)*((c0^2)*(k)/(4*pi^2)));
 meas_beta = phase*-1/length; %calculate phase coefficient
 
-v_phase_m = 2*pi*freq/meas_beta(:,1);
-v_phase_c = 2*pi*freq/calc_beta(:,1); %calculate phase velocity
+v_phase_m = 2*pi*freq./meas_beta(:,1);
+v_phase_c = c0./sqrt((1-(fc./freq).^2)); %calculate phase velocity
 
-v_group_m = 1./(gradient(meas_beta(:))/step);
+v_group_m = 2*pi*step./(gradient(meas_beta(:)));
 % v_group_m = sqrt(c0^2* meas_beta.^2+(2*pi*freq).^2)*(1/(meas_beta.*c0^2));
-v_group_c = c0*sqrt(1-(fc./freq).^2); %calculate group velocity
+v_group_c = c0.*sqrt(1-(fc./freq).^2); %calculate group velocity
+
+phase_error = log10(abs((v_phase_m-v_phase_c)/10^9));
+group_error = log10(abs(v_group_m-v_group_c)/10^9);
 
 %% Plotting
+%Phase Velocity
 figure();
 grid on
 hold on
+ax = gca;
 
-plot(freq/10^9,v_phase_m(:,201)/10^8,'LineWidth',1, color='#0072BD')
-plot(freq/10^9,v_phase_c(:,201)/10^8,'LineWidth',1,color='#7E2F8E')
-legend('Measured Phase Velocity','Calculated Phase Velocity','Interpreter', ...
-    'latex','Location','southeast')
+yyaxis left
+plot(freq/10^9,v_phase_m/10^8,'LineStyle','-','LineWidth',1, color='#0072BD')
+plot(freq/10^9,v_phase_c/10^8,'LineStyle','-','LineWidth',1,color='#7E2F8E')
+ylabel('Phase Velocity [$10^8$ m/s]','Color','k','Interpreter','latex')
+ylim([0 30])
 
+yyaxis right
+plot(freq/10^9,phase_error, 'LineStyle','--')
+legend('Measured Phase Velocity','Calculated Phase Velocity', 'Log$_{10}$ Error','Interpreter', ...
+    'latex','Location','northeast')
+
+ylim([-4 -1])
 xlim([6.555 13])
-ylim([0 4])
-%ylim([-190 190])
+ax.YAxis(1).Color = 'k';
+ax.YAxis(2).Color = 'k';
 title ("Phase Velocity of Waveguide",'Interpreter','latex')
 xlabel('Frequency [GHz]','Interpreter','latex')
-ylabel('Phase Velocity [$10^8$ m/s]','Interpreter','latex')
-% ylabel('Angle [$^{\circ}]$','Interpreter','latex')
+ylabel('Log$_{10}$ Error [m/s]','Interpreter','latex')
 
+%Group Velocity
 figure();
 grid on
 hold on
+ax = gca;
 % 
-plot(freq/10^9,v_group_m/10^8,'LineWidth',1, color='#0072BD')
-plot(freq/10^9,v_group_c/10^8,'LineWidth',1,color='#7E2F8E')
-legend('Measured Group Velocity','Calculated Phase Velocity','Interpreter', ...
-    'latex','Location','southeast')
+yyaxis left
+plot(freq/10^9,v_group_m/10^8,'LineStyle','-','LineWidth',1,color='#0072BD')
+plot(freq/10^9,v_group_c/10^8,'LineStyle','-','LineWidth',1,color='#7E2F8E')
 
 xlim([6.555 13])
 ylim([0 4])
-title ("Phase Velocity of Waveguide",'Interpreter','latex')
+title ("Group Velocity of Waveguide",'Interpreter','latex')
 xlabel('Frequency [GHz]','Interpreter','latex')
-ylabel('Group Velocity [$10^8$ m/s]','Interpreter','latex')
-% ylabel('Angle [$^{\circ}]$','Interpreter','latex')
+ylabel('Group Velocity [$10^8$ m/s]','Interpreter','latex','Color','k')
+ax.YAxis(1).Color = 'k';
+ax.YAxis(2).Color = 'k';
+
+yyaxis right
+plot(freq/10^9,group_error,'LineStyle','--')
+ylabel('Log$_{10}$ Error [m/s]','Interpreter','latex')
+ylim([-5 5])
+legend('Measured Group Velocity','Calculated Phase Velocity','Log$_{10}$ Error','Interpreter', ...
+    'latex','Location','northeast')
